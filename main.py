@@ -1,21 +1,13 @@
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route("/get-user/<user_id>")
-def get_user(user_id):
-    user_data = {
-        "user_id": user_id,
-        "name": "John Doe",
-        "email": "john.doe@example.com"
-    }
-
-    extra = request.args.get("extra")
-    if extra:
-        user_data["extra"] = extra
-
-    return jsonify(user_data), 200
+from fastapi import FastAPI
+from random import randint
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+app = FastAPI()
+@app.get("/")
+def root():
+    return {"number": randint(1, 10)}
+
+@app.get("/random")
+def get_random_number():
+    """Return a random integer between 1 and 10."""
+    return {"number": randint(1, 10)}
